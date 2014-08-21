@@ -23,13 +23,13 @@ public class BinarySerializer implements Serializer {
             new ConcurrentHashMap<Class<?>, DatumWriter>();
 
     @Override
-    public <T> void serialize(T obj, OutputStream stream) throws IOException {
+    public <T extends SpecificRecord> void serialize(T obj, OutputStream stream) throws IOException {
         DatumWriter<T> writer = getWriter(obj);
         writer.write(obj, new BinaryEncoder(stream));
     }
 
     @Override
-    public <T> T deserialize(Class<T> objClass, InputStream stream) throws IOException {
+    public <T extends SpecificRecord> T deserialize(Class<T> objClass, InputStream stream) throws IOException {
         DatumReader<T> reader = getReader(objClass);
         return reader.read(null, new BinaryDecoder(stream));
     }

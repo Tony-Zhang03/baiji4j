@@ -1,5 +1,7 @@
 package com.ctriposs.baiji;
 
+import com.ctriposs.baiji.specific.SpecificRecord;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -13,7 +15,7 @@ public interface Serializer {
      * @param <T>
      * @throws IOException
      */
-    <T> void serialize(T obj, OutputStream stream) throws IOException;
+    <T extends SpecificRecord> void serialize(T obj, OutputStream stream) throws IOException;
 
     /**
      * Deserialize an object with the given type from the stream
@@ -23,5 +25,5 @@ public interface Serializer {
      * @return
      * @throws IOException
      */
-    <T> T deserialize(Class<T> objClass, InputStream stream) throws IOException;
+    <T extends SpecificRecord> T deserialize(Class<T> objClass, InputStream stream) throws IOException;
 }
