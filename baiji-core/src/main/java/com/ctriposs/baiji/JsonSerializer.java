@@ -23,6 +23,7 @@ public class JsonSerializer implements Serializer {
     @Override
     public <T extends SpecificRecord> void serialize(T obj, OutputStream stream) throws IOException {
         DatumWriter<T> writer = getWriter(obj);
+
     }
 
     @Override
