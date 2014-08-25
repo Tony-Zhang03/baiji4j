@@ -9,9 +9,14 @@ import org.codehaus.jackson.util.MinimalPrettyPrinter;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.nio.ByteBuffer;
 
 public class JsonEncoder implements Encoder {
+
     private static final String LINE_SEPARATOR = System.getProperty("line.separator");
+
+    static final String CHARSET = "ISO-8859-1";
 
     private JsonGenerator out;
 
@@ -65,6 +70,15 @@ public class JsonEncoder implements Encoder {
         out.writeEndObject();
     }
 
+    /**
+     * Write the field name
+     * @param fieldName the field name
+     * @throws IOException
+     */
+    public void writeFieldName(String fieldName) throws IOException {
+        out.writeFieldName(fieldName);
+    }
+
     @Override
     public void writeNull() throws IOException {
     }
@@ -93,9 +107,29 @@ public class JsonEncoder implements Encoder {
     public void writeString(String str) throws IOException {
     }
 
+    public void writeBytes(ByteBuffer byteBuffer) throws IOException {
+        if (byteBuffer.hasArray()) {
+            writeBytes(byteBuffer.array(), byteBuffer.position(), byteBuffer.remaining());
+        } else {
+            byte[] b = new byte[byteBuffer.remaining()];
+            byteBuffer.duplicate().get(b);
+            writeBytes(b, 0, b.length);
+        }
+    }
+
+    public void writeBytes(byte[] bytes, int start, int len) throws IOException {
+        writeByteArray(bytes, start, len);
+    }
+
+    public void writeByteArray(byte[] bytes, int start, int len) throws IOException {
+        out.writeString(new String(bytes, start, len, JsonEncoder.CHARSET));
+    }
+
     @Override
     public void writeBytes(byte[] bytes) throws IOException {
+        out.writeBinary(bytes);
     }
+
 
     @Override
     public void writeEnum(int e) throws IOException {

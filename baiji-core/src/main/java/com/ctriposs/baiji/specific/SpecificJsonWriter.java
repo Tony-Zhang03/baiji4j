@@ -8,6 +8,7 @@ import com.ctriposs.baiji.schema.RecordSchema;
 import com.ctriposs.baiji.schema.Schema;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 
 public class SpecificJsonWriter<T> implements DatumWriter<T> {
 
@@ -32,6 +33,44 @@ public class SpecificJsonWriter<T> implements DatumWriter<T> {
         try {
             switch (schema.getType()) {
                 case INT:
+                    out.writeFieldName(fieldName);
+                    out.writeInt(((Number)datum).intValue());
+                    break;
+                case LONG:
+                    out.writeFieldName(fieldName);
+                    out.writeLong((Long)datum);
+                    break;
+                case FLOAT:
+                    out.writeFieldName(fieldName);
+                    out.writeFloat((Float)datum);
+                    break;
+                case DOUBLE:
+                    out.writeFieldName(fieldName);
+                    out.writeDouble((Double)datum);
+                    break;
+                case BOOLEAN:
+                    out.writeFieldName(fieldName);
+                    out.writeBoolean((Boolean) datum);
+                    break;
+                case STRING:
+                    out.writeFieldName(fieldName);
+                    out.writeString(((CharSequence) datum).toString());
+                    break;
+                case BYTES:
+                    out.writeFieldName(fieldName);
+                    out.writeBytes((ByteBuffer) datum);
+                    break;
+                case NULL:
+                    break;
+                case ENUM:
+                    break;
+                case ARRAY:
+                    break;
+                case MAP:
+                    break;
+                case UNION:
+                    break;
+                default:
             }
         } catch (NullPointerException e) {
 
