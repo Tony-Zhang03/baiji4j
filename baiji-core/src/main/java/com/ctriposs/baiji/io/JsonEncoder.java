@@ -1,9 +1,28 @@
 package com.ctriposs.baiji.io;
 
+import org.codehaus.jackson.JsonEncoding;
+import org.codehaus.jackson.JsonFactory;
+import org.codehaus.jackson.JsonGenerator;
+
 import java.io.IOException;
+import java.io.OutputStream;
 
 public class JsonEncoder implements Encoder {
 
+    private JsonGenerator out;
+
+    public JsonEncoder(OutputStream out) {
+
+    }
+
+    public JsonEncoder(JsonGenerator out) {
+
+    }
+
+    private static JsonGenerator getJsonGenerator(OutputStream out) throws IOException {
+        return out == null ? null :
+          new JsonFactory().createJsonGenerator(out, JsonEncoding.UTF8);
+    }
 
     @Override
     public void writeNull() throws IOException {
