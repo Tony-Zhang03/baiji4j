@@ -1,5 +1,6 @@
 package com.ctriposs.baiji.io;
 
+import com.ctriposs.baiji.schema.Schema;
 import org.codehaus.jackson.JsonEncoding;
 import org.codehaus.jackson.JsonFactory;
 import org.codehaus.jackson.JsonGenerator;
@@ -11,12 +12,12 @@ public class JsonEncoder implements Encoder {
 
     private JsonGenerator out;
 
-    public JsonEncoder(OutputStream out) {
-
+    public JsonEncoder(Schema sc, OutputStream out) throws IOException {
+        this(sc, getJsonGenerator(out));
     }
 
-    public JsonEncoder(JsonGenerator out) {
-
+    public JsonEncoder(Schema sc, JsonGenerator out) {
+        this.out = out;
     }
 
     private static JsonGenerator getJsonGenerator(OutputStream out) throws IOException {

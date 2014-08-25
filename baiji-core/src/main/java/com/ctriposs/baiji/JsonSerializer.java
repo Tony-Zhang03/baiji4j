@@ -3,6 +3,7 @@ package com.ctriposs.baiji;
 
 import com.ctriposs.baiji.generic.DatumReader;
 import com.ctriposs.baiji.generic.DatumWriter;
+import com.ctriposs.baiji.io.JsonEncoder;
 import com.ctriposs.baiji.specific.SpecificDatumWriter;
 import com.ctriposs.baiji.specific.SpecificRecord;
 
@@ -23,7 +24,7 @@ public class JsonSerializer implements Serializer {
     @Override
     public <T extends SpecificRecord> void serialize(T obj, OutputStream stream) throws IOException {
         DatumWriter<T> writer = getWriter(obj);
-
+        writer.write(obj, new JsonEncoder(obj.getSchema(), stream));
     }
 
     @Override
