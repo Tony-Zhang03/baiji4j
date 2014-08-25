@@ -67,32 +67,26 @@ public class JsonEncoder implements Encoder {
 
     @Override
     public void writeNull() throws IOException {
-        out.writeNull();
     }
 
     @Override
     public void writeBoolean(boolean b) throws IOException {
-        out.writeBoolean(b);
     }
 
     @Override
     public void writeInt(int n) throws IOException {
-        out.writeNumber(n);
     }
 
     @Override
     public void writeLong(long n) throws IOException {
-        out.writeNumber(n);
     }
 
     @Override
     public void writeFloat(float f) throws IOException {
-        out.writeNumber(f);
     }
 
     @Override
     public void writeDouble(double d) throws IOException {
-        out.writeNumber(d);
     }
 
     @Override

@@ -4,7 +4,7 @@ package com.ctriposs.baiji;
 import com.ctriposs.baiji.generic.DatumReader;
 import com.ctriposs.baiji.generic.DatumWriter;
 import com.ctriposs.baiji.io.JsonEncoder;
-import com.ctriposs.baiji.specific.SpecificDatumWriter;
+import com.ctriposs.baiji.specific.SpecificJsonWriter;
 import com.ctriposs.baiji.specific.SpecificRecord;
 
 import java.io.IOException;
@@ -36,7 +36,7 @@ public class JsonSerializer implements Serializer {
         Class clazz = obj.getClass();
         DatumWriter<T> writer = _writerCache.get(clazz);
         if (writer == null) {
-            writer = new SpecificDatumWriter<T>(obj.getSchema());
+            writer = new SpecificJsonWriter<>(obj.getSchema());
             DatumWriter<T> existedWriter = _writerCache.putIfAbsent(clazz, writer);
             if (existedWriter != null) {
                 writer = existedWriter;
